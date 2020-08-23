@@ -12,7 +12,7 @@ import { TodoItemComponent } from './todo/todo-item/todo-item.component';
 import { TodoComponent } from './todo/todo.component';
 import { TodosListComponent } from './todo/todos-list/todos-list.component';
 
-import { listTaskReducer } from './app.reducer'
+import { listTaskReducer } from './app.reducer';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 
@@ -32,6 +32,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
     ReactiveFormsModule,
     StoreModule.forRoot({
       task: listTaskReducer,
+      taskFilter: listTaskReducer,
     }),
     StoreDevtoolsModule.instrument({
       maxAge:25

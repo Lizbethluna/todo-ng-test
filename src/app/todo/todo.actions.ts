@@ -7,9 +7,7 @@ export enum TodoActionsTypes {
     TASKS_UPDATE = '[TASK] Update task',
     TASKS_DELETE = '[TASK] Delete task',
     TASKS_DELETE_ALL = '[TASK] Delete All task',
-    TASKS_FILTER_ALL = '[TASK] All Filter task',
-    TASKS_FILTER_PENDING = '[TASK] Pending Filter task',
-    TASKS_FILTER_COMPLETED = '[TASK] Completed Filter task',
+    TASKS_FILTER = '[TASK] Category Filter task',
 }
 
 export class AddTaskAction implements Action {
@@ -19,12 +17,12 @@ export class AddTaskAction implements Action {
 
 export class UpdateTaskAction implements Action {
     readonly type = TodoActionsTypes.TASKS_UPDATE;
-    constructor(public payload: string) {}
+    constructor(public payload: ListTask) {}
 }
 
 export class DeleteTaskAction implements Action {
     readonly type = TodoActionsTypes.TASKS_DELETE;
-    constructor(public payload: string) {}
+    constructor(public payload: number) {}
 }
 
 export class DeleteAllTaskAction implements Action {
@@ -32,19 +30,9 @@ export class DeleteAllTaskAction implements Action {
     constructor(public payload: string) {}
 }
 
-export class FilterAllTaskAction implements Action {
-    readonly type = TodoActionsTypes.TASKS_FILTER_ALL;
+export class FilterTaskAction implements Action {
+    readonly type = TodoActionsTypes.TASKS_FILTER;
     constructor(public payload: string) {}
 }
 
-export class FilterPendingTaskAction implements Action {
-    readonly type = TodoActionsTypes.TASKS_FILTER_PENDING;
-    constructor(public payload: string) {}
-}
-
-export class FilterCompletedTaskAction implements Action {
-    readonly type = TodoActionsTypes.TASKS_FILTER_COMPLETED;
-    constructor(public payload: string) {}
-}
-
-export type TodoActions = AddTaskAction | DeleteTaskAction | DeleteAllTaskAction | UpdateTaskAction | FilterAllTaskAction | FilterPendingTaskAction | FilterCompletedTaskAction;
+export type TodoActions = AddTaskAction | DeleteTaskAction | DeleteAllTaskAction | UpdateTaskAction | FilterTaskAction;

@@ -1,5 +1,5 @@
 import { ListTask } from './todo.model';
 
 export interface AppState {
-    readonly task: Array<ListTask>
+    readonly task: Array<ListTask>,
 }

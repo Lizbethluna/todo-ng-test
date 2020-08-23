@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 import { AppState } from '../todo-state.model';
 import { ListTask } from '../todo.model';
 import { Observable } from 'rxjs';
-import { DeleteTaskAction, DeleteAllTaskAction, UpdateTaskAction } from '../todo.actions';
+import { DeleteTaskAction, UpdateTaskAction } from '../todo.actions';
 @Component({
   selector: 'app-todo-item',
   templateUrl: './todo-item.component.html',
@@ -11,9 +11,12 @@ import { DeleteTaskAction, DeleteAllTaskAction, UpdateTaskAction } from '../todo
 })
 export class TodoItemComponent implements OnInit {
   tasksItems$: Observable <Array<ListTask>>;
-  newTaskItem$: ListTask = { item: '', status: '', check:true};
+  item: ListTask = { id: 0, item: '', status: '', check:true};
   isChecked: boolean;
-  preventSingleClick = false;
+  preventSingleClick: boolean = false;
+  isEditModeEnabled: boolean = false;
+  idEditModeEnabled: BigInteger;
+
   constructor(private store: Store<AppState>) {}
 
   ngOnInit(): void {
@@ -21,22 +24,27 @@ export class TodoItemComponent implements OnInit {
   }
 
   // Activar input editar al dar doble click en la etiqueta
-  
+  activeEditTask(index) {
+    this.isEditModeEnabled = true;
+    this.idEditModeEnabled = index;
+  }
 
   // Actualizar valor del elementos en la lista
-  updateTask(item: string){
-    console.log('Este es el item ', item);
-    // this.store.dispatch(new UpdateTaskAction(item));
+  updateTask(task, item_edit: string, index){
+    const array_item = {
+      id: task.id,
+      item: item_edit,
+      status: task.status, 
+      check: task.check
+    }
+
+    this.store.dispatch(new UpdateTaskAction(array_item));
+    this.isEditModeEnabled = false;
+    this.idEditModeEnabled = index;
   }
 
   // Elimina el elemento de la lista
-  deleteTask(item: string){
-    this.store.dispatch(new DeleteTaskAction(item));
+  deleteTask(id: number){
+    this.store.dispatch(new DeleteTaskAction(id));
   }
-
-  // Elimina todos los elementos de la lista
-  deleteAllTask(item: string){
-    this.store.dispatch(new DeleteAllTaskAction(item));
-  }
-
 }
